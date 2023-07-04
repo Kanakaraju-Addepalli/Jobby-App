@@ -182,11 +182,27 @@ class Jobs extends Component {
     this.setState({minimumSalary: salary}, this.getJobs)
   }
 
+  //   changeEmployeeList = type => {
+  //     this.setState(
+  //       prev => ({employeeType: [...prev.employeeType, type]}),
+  //       this.getJobs,
+  //     )
+  //   }
+
   changeEmployeeList = type => {
-    this.setState(
-      prev => ({employeeType: [...prev.employeeType, type]}),
-      this.getJobs,
+    const {employeeType} = this.state
+    const employeeTypeNotInList = employeeType.filter(
+      eachItem => eachItem === type,
     )
+    if (employeeTypeNotInList.length === 0) {
+      this.setState(
+        prevState => ({employeeType: [...prevState.employeeType, type]}),
+        this.getJobs,
+      )
+    } else {
+      const filteredData = employeeType.filter(eachItem => eachItem !== type)
+      this.setState(prevState => ({employeeType: filteredData}), this.getJobs)
+    }
   }
 
   render() {
